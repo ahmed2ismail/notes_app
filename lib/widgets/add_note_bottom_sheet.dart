@@ -63,12 +63,12 @@ class _AddNoteFormState extends State<AddNoteForm> {
             onPressed: () {
               if (_formKey.currentState!.validate()) {
                 // بمعني لو البيانات كلها صح
-              // حفظ البيانات اللي المستخدم دخلها في الفورم
+              // حفظ البيانات اللي المستخدم دخلها في الفورم والبيانات دي بتتحفظ في المتغيرات اللي انا معرفها فوق
               _formKey.currentState?.save();
               } else {
               // لو في بيانات غلط فهنفعل التحقق من صحة البيانات عشان يبان للمستخدم ايه الغلط
                 autovalidateMode = AutovalidateMode.always;
-              setState(() {});
+              setState(() {}); // عشان نحدث الواجهة عشان التغيير اللي حصل في autovalidateMode يظهر في الفورم
               }
               // طباعة البيانات في الكونسول عشان اتاكد انها بتتسجل صح
               print('Title: $title');

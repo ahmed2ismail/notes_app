@@ -16,6 +16,7 @@ class CustomTextFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      // هنستخدم onSaved عشان اخزن البيانات اللي المستخدم بيدخلها في المتغيرات اللي انا معرفها في الفورم
       onSaved: onSaved,
       validator: (value) {
         if (value == null || value.isEmpty) {
