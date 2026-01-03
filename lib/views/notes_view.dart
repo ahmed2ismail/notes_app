@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:notes_app/widgets/custom_search_icon.dart';
-import 'package:notes_app/widgets/note_card_widget.dart';
+import 'package:notes_app/widgets/notes_list_view.dart';
 
 class NotesView extends StatelessWidget {
   const NotesView({super.key});
@@ -19,7 +19,12 @@ class NotesView extends StatelessWidget {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: NoteCardWidget(),
+          child: Column(
+            children: [
+              SizedBox(height: 32),
+              Expanded(child: NotesListView()),
+            ],
+          ),
         ),
       ),
     );

@@ -21,7 +21,7 @@ class NotesApp extends StatelessWidget {
           elevation: 0,
         ),
         useMaterial3: true,
-        fontFamily: 'Poppins'
+        fontFamily: 'Poppins',
       ),
       home: NotesView(),
     );
