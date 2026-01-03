@@ -16,12 +16,19 @@ class NotesView extends StatelessWidget {
         actionsPadding: const EdgeInsets.only(right: 16, top: 10),
         actions: [CustomSearchIcon()],
       ),
-      body: SafeArea(
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.blue,
+        foregroundColor: Colors.black,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
+        onPressed: () {},
+        child: const Icon(Icons.add),
+      ),
+      body: const SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          padding: EdgeInsets.symmetric(horizontal: 16.0),
           child: Column(
             children: [
-              SizedBox(height: 32),
+              SizedBox(height: 16),
               Expanded(child: NotesListView()),
             ],
           ),
