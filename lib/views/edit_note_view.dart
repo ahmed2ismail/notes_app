@@ -9,7 +9,8 @@ class EditNoteView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(  
+        // automaticallyImplyLeading: false, // يخفي الزر لكن يمكن الوصول للشاشة بالـ back gesture
+        title: const Text(
           'Edit Note',
           style: TextStyle(color: Colors.white, fontSize: 30),
         ),
