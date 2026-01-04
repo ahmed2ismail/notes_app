@@ -29,9 +29,5 @@ class AddNoteCubit extends Cubit<AddNoteCubitState> {
   AddNoteCubit() : super(AddNoteCubitInitial());
 
   addNote(NoteModel note) {
-    // emit(AddNoteCubitInitial());
-    // final notesBox = Hive.box<NoteModel>(kNotesBoxName);
-    // notesBox.add(note);
-    // emit(AddNoteCubitInitial());
   }
 }
