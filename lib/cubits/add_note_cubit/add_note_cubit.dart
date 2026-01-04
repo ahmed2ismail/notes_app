@@ -9,7 +9,17 @@
 // بنسميه AddNotesCubit لان هو هيكون مسؤول عن ادارة الحالة الخاصة بالملاحظات
 // بنورثه من Cubit وندي له النوع بتاع الحالة اللي هي Manageها (AddNotesCubitState)
 // في الكونستركتور بنادي على الكونستركتور بتاع الاب (super)
+// ## خطوات انشاء الـ Cubit:
+// 1. استيراد مكتبة flutter_bloc
+// 2. انشاء كلاس الحالة (State) الخاص بالـ Cubit
+// 3. انشاء كلاس الـ Cubit نفسه
+// وبعد كده بنعمل ملف للـ States بتاعتنا عشان ننظم الكود اكتر
+// بعد محدد الحالات بكتب الكود وبعد كده ب provide ال Cubit في المكان المناسب في الابلكيشن
+
+// ## كود انشاء الـ Cubit:
+
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:notes_app/models/note_model.dart';
 
 class AddNoteCubitState {}
 
@@ -17,4 +27,11 @@ class AddNoteCubitInitial extends AddNoteCubitState {}
 
 class AddNoteCubit extends Cubit<AddNoteCubitState> {
   AddNoteCubit() : super(AddNoteCubitInitial());
+
+  addNote(NoteModel note) {
+    // emit(AddNoteCubitInitial());
+    // final notesBox = Hive.box<NoteModel>(kNotesBoxName);
+    // notesBox.add(note);
+    // emit(AddNoteCubitInitial());
+  }
 }
