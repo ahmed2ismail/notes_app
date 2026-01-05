@@ -14,7 +14,7 @@ class SimpleBlocObserver implements BlocObserver {
     // debugPrint: بتطبع الرسالة في الكونسول، وبتقسم الرسالة لو كانت طويلة عشان تظهر كاملة
     // print: دي بتفضل موجودة في الابلكيشن حتى في ال release mode لما اجي اعمل نسخة للابلكيشن عشان انشرها ودا شيء مش كويس عشان ممكن تكشف معلومات حساسةومهمة مينفعش تظهر
     // debugPrint: دي بتختفي في ال release mode لما اعمل نسخة للابلكيشن 
-    debugPrint('Change -- ${bloc.runtimeType}, $change');
+    debugPrint('Change -- ${bloc.runtimeType} => $change');
   }
   // وكدا خلصناها فهنروح علي ال main.dart عشان نستخدمها هناك عن طريق
   // بنسجل ال BlocObserver بتاعنا
@@ -23,31 +23,31 @@ class SimpleBlocObserver implements BlocObserver {
 
   @override
   void onClose(BlocBase<dynamic> bloc) {
-    // TODO: implement onClose
+    debugPrint('Close -- ${bloc.runtimeType} => $bloc');
   }
 
   @override
   void onCreate(BlocBase<dynamic> bloc) {
-    // TODO: implement onCreate
+    debugPrint('Create -- ${bloc.runtimeType} => $bloc');
   }
 
   @override
   void onDone(Bloc<dynamic, dynamic> bloc, Object? event, [Object? error, StackTrace? stackTrace]) {
-    // TODO: implement onDone
+    debugPrint('Done -- ${bloc.runtimeType} => $event,/ error: $error,/ stackTrace: $stackTrace');
   }
 
   @override
   void onError(BlocBase<dynamic> bloc, Object error, StackTrace stackTrace) {
-    // TODO: implement onError
+    debugPrint('Error -- ${bloc.runtimeType} => $error');
   }
 
   @override
   void onEvent(Bloc<dynamic, dynamic> bloc, Object? event) {
-    // TODO: implement onEvent
+    debugPrint('Event -- ${bloc.runtimeType} => $event');
   }
 
   @override
   void onTransition(Bloc<dynamic, dynamic> bloc, Transition<dynamic, dynamic> transition) {
-    // TODO: implement onTransition
+    debugPrint('Transition -- ${bloc.runtimeType} => $transition');
   }
 }

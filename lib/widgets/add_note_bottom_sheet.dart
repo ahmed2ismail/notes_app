@@ -10,29 +10,33 @@ class AddNoteBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16.0),
-      child: BlocConsumer<AddNoteCubit, AddNoteState>(
-        listener: (context, state) {
-          if (state is AddNoteSuccess) {
-            // لو النوت اتضافت بنجاح هنقفل ال Bottom Sheet
-            Navigator.pop(context);
-          } else if (state is AddNoteFailure) {
-            // لو في خطأ حصل هنظهر رسالة خطأ للمستخدم
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text('Failed to add note: ${state.errMessage}'),
-              ),
+    return BlocProvider(
+      // بنوفر ال AddNoteCubit هنا في ال Bottom Sheet عشان نستخدمه في الفورم بتاع اضافة الملاحظات فقط لاننا مش محتاجينه في اي مكان تاني في الابلكيشن
+      create: (context) => AddNoteCubit(),
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 16.0),
+        child: BlocConsumer<AddNoteCubit, AddNoteState>(
+          listener: (context, state) {
+            if (state is AddNoteSuccess) {
+              // لو النوت اتضافت بنجاح هنقفل ال Bottom Sheet
+              Navigator.pop(context);
+            } else if (state is AddNoteFailure) {
+              // لو في خطأ حصل هنظهر رسالة خطأ للمستخدم
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text('Failed to add note: ${state.errMessage}'),
+                ),
+              );
+            }
+          },
+          builder: (context, state) {
+            return ModalProgressHUD(
+              // بنستخدم ModalProgressHUD عشان نعرض مؤشر تحميل لما الحالة بتاعت ال Cubit تكون Loading ولازم يكون فوق ال SingleChildScrollView عشان مايحصلش overflow لل height عند ظهور مؤشر التحميل
+              inAsyncCall: state is AddNoteLoading ? true : false,
+              child: const SingleChildScrollView(child: AddNoteForm()),
             );
-          }
-        },
-        builder: (context, state) {
-          return ModalProgressHUD(
-            // بنستخدم ModalProgressHUD عشان نعرض مؤشر تحميل لما الحالة بتاعت ال Cubit تكون Loading ولازم يكون فوق ال SingleChildScrollView عشان مايحصلش overflow لل height عند ظهور مؤشر التحميل
-            inAsyncCall: state is AddNoteLoading ? true : false,
-            child: const SingleChildScrollView(child: AddNoteForm()),
-          );
-        },
+          },
+        ),
       ),
     );
   }
