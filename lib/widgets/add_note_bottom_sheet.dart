@@ -1,83 +1,47 @@
 import 'package:flutter/material.dart';
-import 'package:notes_app/widgets/custom_button.dart';
-import 'package:notes_app/widgets/custom_text_form_field.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:notes_app/cubits/add_note_cubit/add_note_cubit.dart';
+import 'package:notes_app/cubits/add_note_cubit/add_note_state.dart';
+import 'package:notes_app/widgets/add_note_form.dart';
 
 class AddNoteBottomSheet extends StatelessWidget {
   const AddNoteBottomSheet({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
+    return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16.0),
-      child: SingleChildScrollView(child: AddNoteForm()),
-    );
-  }
-}
-
-class AddNoteForm extends StatefulWidget {
-  const AddNoteForm({super.key});
-
-  @override
-  State<AddNoteForm> createState() => _AddNoteFormState();
-}
-
-class _AddNoteFormState extends State<AddNoteForm> {
-  final _formKey = GlobalKey<FormState>();
-  // autovalidateMode variable to control form validation mode / بنستخدمها عشان نتحكم في وضع التحقق من صحة الفورم يعني هل البيانات بتتراجع اوتوماتيك ولا لأ وهل هي صحيحة ولا لأ
-  // بمعني هل البيانات اللي المستخدم بيدخلها زي منا عايز ولا غلط
-  // طبعا انا في الاول بخليها معطلة لحد ما المستخدم يضغط على زرار الاضافة وبعد كده بغير قيمتها عشان ابدا التحقق من صحة البيانات
-  // وبناءا علي التغيير دا فلازم يكون StatefulWidget مش StatelessWidget
-  AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
-  // لو هننشا اي متغير مش final فلازم نعمله جوه StatefulWidget مش StatelessWidget عشان نقدر نغير قيمته و تتحدث الواجهة
-  String? title, content;
-
-  @override
-  Widget build(BuildContext context) {
-    return Form(
-      key: _formKey,
-      autovalidateMode: autovalidateMode,
-      child: Column(
-        children: [
-          const SizedBox(height: 8),
-          const Text(
-            'Add Note',
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 16),
-          CustomTextFormField(
-            hintText: 'Title',
-            onSaved: (value) {
-              title = value;
-            },
-          ),
-          const SizedBox(height: 16),
-          CustomTextFormField(
-            hintText: 'Content',
-            maxLines: 5,
-            onSaved: (value) {
-              content = value;
-            },
-          ),
-          const SizedBox(height: 55),
-          CustomButton(
-            onPressed: () {
-              if (_formKey.currentState!.validate()) {
-                // بمعني لو البيانات كلها صح
-              // حفظ البيانات اللي المستخدم دخلها في الفورم والبيانات دي بتتحفظ في المتغيرات اللي انا معرفها فوق
-              _formKey.currentState?.save();
-              } else {
-              // لو في بيانات غلط فهنفعل التحقق من صحة البيانات عشان يبان للمستخدم ايه الغلط
-                autovalidateMode = AutovalidateMode.always;
-              setState(() {}); // عشان نحدث الواجهة عشان التغيير اللي حصل في autovalidateMode يظهر في الفورم
-              }
-              // طباعة البيانات في الكونسول عشان اتاكد انها بتتسجل صح
-              print('Title: $title');
-              print('Content: $content');
-            },
-          ),
-          const SizedBox(height: 16),
-        ],
+      child: SingleChildScrollView(
+        // هنستخدم BlocConsumer عشان نقدر نستمع للحالات المختلفة لل Cubit ونعرض الواجهة بناءً على الحالة الحالية
+        child: BlocConsumer<AddNoteCubit, AddNoteState>(
+          listener: (context, state) {
+            if (state is AddNoteSuccess) {
+              // لو النوت اتضافت بنجاح هنقفل ال Bottom Sheet
+              Navigator.pop(context);
+            } else if (state is AddNoteFailure) {
+              // لو في خطأ حصل هنظهر رسالة خطأ للمستخدم
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text('Failed to add note: ${state.errMessage}'),
+                ),
+              );
+            }
+          },
+          builder: (context, state) {
+            return ModalProgressHUD(
+              inAsyncCall: state is AddNoteLoading ? true : false,
+              child: const AddNoteForm(),
+            );
+          },
+        ),
       ),
     );
   }
 }
+
+// الفرق بين BlockBuilder و BlockConsumer و BlocListener:
+// 1. BlocBuilder: بنستخدمه لما نكون عايزين نبني واجهة بناءً على الحالة الحالية لل Cubit او Bloc زي لما نكون عايزين نعرض بيانات معينة بناءً على حالة زي loading او success او failure
+// 2. BlocListener: بنستخدمه لما نكون عايزين نستمع لتغيرات الحالة ونعمل حاجة معينة لما الحالة تتغير (زي اظهار رسالة او التنقل لصفحة تانية) يعني بيبقي فيه return Widget
+// 3. BlocConsumer: هو مزيج بين BlocBuilder و BlocListener بنستخدمه لما نكون عايزين نبني واجهة ونستمع لتغيرات الحالة في نفس الوقت
+// في الحالة دي انا استخدمت BlocConsumer عشان اقدر ابني الواجهة و استمع للحالات المختلفة لل Cubit في نفس الوقت
