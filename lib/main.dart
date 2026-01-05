@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:notes_app/constansts.dart';
+import 'package:notes_app/cubits/add_note_cubit/add_note_cubit.dart';
 import 'package:notes_app/models/note_model.dart';
 import 'package:notes_app/views/notes_view.dart';
 
@@ -24,20 +26,29 @@ class NotesApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Notes App',
-      theme: ThemeData(
-        brightness: Brightness.dark,
-        // scaffoldBackgroundColor: ThemeData.dark().scaffoldBackgroundColor,
-        appBarTheme: const AppBarTheme(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
+    // الخطوة اللي عليها الدور بعد انشاء ال cubit هي استخدامه عن طريق MultiBlocProvider فوق ال MaterialApp عشان نوفر ال Cubit لكل الابلكيشن
+    // بنستخدم MultiBlocProvider لما يكون عندنا اكتر من Cubit او Bloc عشان نوفرهم في نفس الوقت في الابلكيشن
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => AddNoteCubit(),
         ),
-        useMaterial3: true,
-        fontFamily: 'Poppins',
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Notes App',
+        theme: ThemeData(
+          brightness: Brightness.dark,
+          // scaffoldBackgroundColor: ThemeData.dark().scaffoldBackgroundColor,
+          appBarTheme: const AppBarTheme(
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+          ),
+          useMaterial3: true,
+          fontFamily: 'Poppins',
+        ),
+        home: NotesView(),
       ),
-      home: NotesView(),
     );
   }
 }
