@@ -4,19 +4,21 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:notes_app/constansts.dart';
 import 'package:notes_app/cubits/add_note_cubit/add_note_cubit.dart';
 import 'package:notes_app/models/note_model.dart';
+import 'package:notes_app/simple_bloc_observer.dart';
 import 'package:notes_app/views/notes_view.dart';
 
 void main() async {
   // الخطوة التانية عشان نستخدم الـ Hive في الفلاتر هي ان احنا نضيف مكتبة hive_flutter
   // هنعمل initialize للـ Hive قبل ما نشغل الابلكيشن جوه ال main function
   await Hive.initFlutter();
-  
   // تسجيل الـ Adapter اللي اتعمله توليد
   Hive.registerAdapter(NoteModelAdapter());
-  
   // فتح الصندوق الخاص بالملاحظات مع تحديد النوع <NoteModel>
   await Hive.openBox<NoteModel>(kNotesBoxName); // اسم الصندوق هو notes_box
   // بعد ما نفتح الصندوق نقدر نستخدمه في اي مكان في الابلكيشن عشان نخزن ونقرأ الملاحظات او البيانات
+
+  // بنسجل ال BlocObserver بتاعنا
+  Bloc.observer = SimpleBlocObserver();
 
   runApp(const NotesApp());
 }
