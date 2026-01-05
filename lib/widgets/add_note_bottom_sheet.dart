@@ -35,10 +35,16 @@ class AddNoteBottomSheet extends StatelessWidget {
             // عشان مايحصلش مشاكل لو المستخدم ضغط على اي حاجة في الفورم وهو في حالة Loading
             // بنخلي absorbing تساوي true لما الحالة تكون Loading وعشان كده بنستخدم BlocConsumer مش BlocListener
             absorbing: state is AddNoteLoading ? true : false,
-            child: const Padding(
+            child: Padding(
               // حطينا ModalProgressHUD فوق ال padding عشان مايحصلش overflow لل height عند ظهور مؤشر التحميل ولون الخلفية بتاع الانديكاتور يبقي هو هو بتاع showModalBottomSheet
-              padding: EdgeInsets.symmetric(horizontal: 16.0),
-              child: SingleChildScrollView(child: AddNoteForm()),
+              padding: EdgeInsets.only(
+                right: 16.0,
+                left: 16.0,
+                // عشان لما يطلع الكيبورد مايحصلش overflow لل height يعني الشاشة متغيرش نفسها
+                // viewInsets.bottom بترجع المساحة اللي اتاخدت من الشاشة بسبب الكيبورد
+                bottom: MediaQuery.of(context).viewInsets.bottom,
+              ),
+              child: const SingleChildScrollView(child: AddNoteForm()),
             ),
           );
         },

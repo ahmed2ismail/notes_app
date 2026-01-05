@@ -9,6 +9,7 @@ class NotesView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // resizeToAvoidBottomInset: false, // عشان لما يطلع الكيبورد مايحصلش overflow لل height يعني الشاشة متغيرش نفسها
       appBar: AppBar(
         title: const Text(
           'Notes',
@@ -23,6 +24,8 @@ class NotesView extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
         onPressed: () {
           showModalBottomSheet(
+            // عشان نقدر نطلع الكيبورد من غير ما يحصل overflow لل height و ال showModalBottomSheet بيطلع فوق الكيبورد والاتنين بيكونوا ظاهرين مع بعض
+            isScrollControlled: true,
             context: context,
             builder: (context) => const AddNoteBottomSheet(),
           );
