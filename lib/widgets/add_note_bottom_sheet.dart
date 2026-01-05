@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:notes_app/cubits/add_note_cubit/add_note_cubit.dart';
 import 'package:notes_app/cubits/add_note_cubit/add_note_state.dart';
 import 'package:notes_app/widgets/add_note_form.dart';
@@ -13,30 +12,36 @@ class AddNoteBottomSheet extends StatelessWidget {
     return BlocProvider(
       // بنوفر ال AddNoteCubit هنا في ال Bottom Sheet عشان نستخدمه في الفورم بتاع اضافة الملاحظات فقط لاننا مش محتاجينه في اي مكان تاني في الابلكيشن
       create: (context) => AddNoteCubit(),
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16.0),
-        child: BlocConsumer<AddNoteCubit, AddNoteState>(
-          listener: (context, state) {
-            if (state is AddNoteSuccess) {
-              // لو النوت اتضافت بنجاح هنقفل ال Bottom Sheet
-              Navigator.pop(context);
-            } else if (state is AddNoteFailure) {
-              // لو في خطأ حصل هنظهر رسالة خطأ للمستخدم
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text('Failed to add note: ${state.errMessage}'),
-                ),
-              );
-            }
-          },
-          builder: (context, state) {
-            return ModalProgressHUD(
-              // بنستخدم ModalProgressHUD عشان نعرض مؤشر تحميل لما الحالة بتاعت ال Cubit تكون Loading ولازم يكون فوق ال SingleChildScrollView عشان مايحصلش overflow لل height عند ظهور مؤشر التحميل
-              inAsyncCall: state is AddNoteLoading ? true : false,
-              child: const SingleChildScrollView(child: AddNoteForm()),
+      child: BlocConsumer<AddNoteCubit, AddNoteState>(
+        // بنستخدم BlocConsumer عشان نبني الواجهة و نستمع لتغيرات الحالة في نفس الوقت عن طريق تنفيذ ال listener اللي هي جواها الاكواد
+        // بس احنا هنا مش عايزين نعيد بناء الواجهة هنستخدم BlocListener بدل BlocConsumer لانه بياخد listener بس من غير builder
+        // بس انا هنا استخدمت BlocConsumer عشان هستخدم ويدجت AbsorbPointer عشان امنع المستخدم من التفاعل مع الفورم لما الحالة تكون Loading
+        listener: (context, state) {
+          if (state is AddNoteSuccess) {
+            // لو النوت اتضافت بنجاح هنقفل ال Bottom Sheet
+            Navigator.pop(context);
+          } else if (state is AddNoteFailure) {
+            // لو في خطأ حصل هنظهر رسالة خطأ للمستخدم
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('Failed to add note: ${state.errMessage}'),
+              ),
             );
-          },
-        ),
+          }
+        },
+        builder: (context, state) {
+          return AbsorbPointer(
+            // بنستخدم AbsorbPointer عشان نمنع التفاعل مع الفورم لما الحالة تكون Loading يعني لما النوت بتتضاف
+            // عشان مايحصلش مشاكل لو المستخدم ضغط على اي حاجة في الفورم وهو في حالة Loading
+            // بنخلي absorbing تساوي true لما الحالة تكون Loading وعشان كده بنستخدم BlocConsumer مش BlocListener
+            absorbing: state is AddNoteLoading ? true : false,
+            child: const Padding(
+              // حطينا ModalProgressHUD فوق ال padding عشان مايحصلش overflow لل height عند ظهور مؤشر التحميل ولون الخلفية بتاع الانديكاتور يبقي هو هو بتاع showModalBottomSheet
+              padding: EdgeInsets.symmetric(horizontal: 16.0),
+              child: SingleChildScrollView(child: AddNoteForm()),
+            ),
+          );
+        },
       ),
     );
   }
