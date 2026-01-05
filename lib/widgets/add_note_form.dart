@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:notes_app/cubits/add_note_cubit/add_note_cubit.dart';
+import 'package:notes_app/models/note_model.dart';
 import 'package:notes_app/widgets/custom_button.dart';
 import 'package:notes_app/widgets/custom_text_form_field.dart';
 
@@ -51,16 +54,27 @@ class _AddNoteFormState extends State<AddNoteForm> {
             onPressed: () {
               if (_formKey.currentState!.validate()) {
                 // بمعني لو البيانات كلها صح
-              // حفظ البيانات اللي المستخدم دخلها في الفورم والبيانات دي بتتحفظ في المتغيرات اللي انا معرفها فوق
-              _formKey.currentState?.save();
+                // حفظ البيانات اللي المستخدم دخلها في الفورم والبيانات دي بتتحفظ في المتغيرات اللي انا معرفها فوق
+                _formKey.currentState?.save();
+                // بعد ما بحفظ البيانات بنعمل ايه؟
+                // هنا بنستخدم ال Cubit اللي انا عملته عشان اضيف النوت الجديدة
+                var noteModel = NoteModel(
+                  title: title!,
+                  content: content!,
+                  date: DateTime.now().toString(),
+                  color: Colors.blue.toARGB32(),
+                );
+                BlocProvider.of<AddNoteCubit>(context).addNote(noteModel);
               } else {
-              // لو في بيانات غلط فهنفعل التحقق من صحة البيانات عشان يبان للمستخدم ايه الغلط
+                // لو في بيانات غلط فهنفعل التحقق من صحة البيانات عشان يبان للمستخدم ايه الغلط
                 autovalidateMode = AutovalidateMode.always;
-              setState(() {}); // عشان نحدث الواجهة عشان التغيير اللي حصل في autovalidateMode يظهر في الفورم
+                setState(
+                  () {},
+                ); // عشان نحدث الواجهة عشان التغيير اللي حصل في autovalidateMode يظهر في الفورم
               }
               // طباعة البيانات في الكونسول عشان اتاكد انها بتتسجل صح
-              print('Title: $title');
-              print('Content: $content');
+              // debugPrint('Title: $title');
+              // debugPrint('Content: $content');
             },
           ),
           const SizedBox(height: 16),

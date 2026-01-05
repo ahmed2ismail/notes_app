@@ -15,9 +15,11 @@ class SimpleBlocObserver implements BlocObserver {
     // print: دي بتفضل موجودة في الابلكيشن حتى في ال release mode لما اجي اعمل نسخة للابلكيشن عشان انشرها ودا شيء مش كويس عشان ممكن تكشف معلومات حساسةومهمة مينفعش تظهر
     // debugPrint: دي بتختفي في ال release mode لما اعمل نسخة للابلكيشن 
     debugPrint('Change -- ${bloc.runtimeType}, $change');
-    debugPrint('------------------ Change: $change -------------------');
   }
-  // وكدا خلصناها فهنروح علي ال main.dart عشان نستخدمها هناك
+  // وكدا خلصناها فهنروح علي ال main.dart عشان نستخدمها هناك عن طريق
+  // بنسجل ال BlocObserver بتاعنا
+  // Bloc.observer = SimpleBlocObserver();
+
 
   @override
   void onClose(BlocBase<dynamic> bloc) {

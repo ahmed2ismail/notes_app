@@ -19,6 +19,7 @@ void main() async {
 
   // بنسجل ال BlocObserver بتاعنا
   Bloc.observer = SimpleBlocObserver();
+// بعد مسجلناه هنروح نعمل trigger للبيانات في ملف ال add_note_form
 
   runApp(const NotesApp());
 }

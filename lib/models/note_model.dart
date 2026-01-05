@@ -15,7 +15,8 @@ class NoteModel extends HiveObject {
   final String content;
 
   @HiveField(2)
-  final DateTime date;
+  // احنا خلينا ال date String عشان hive ما بيدعمش DateTime بشكل مباشر لانه Object و hive بيدعم بس الانواع البسيطة زي int, double, String, bool, List, Map اما لو احنا عايزين نخزن Object زي DateTime فلازم نعمل Adapter خاص بيه
+  final String date;
 
   @HiveField(3)
   final int color;
