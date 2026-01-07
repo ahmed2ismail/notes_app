@@ -7,15 +7,18 @@ class CustomTextFormField extends StatelessWidget {
     required this.hintText,
     this.maxLines = 1,
     this.onSaved,
+    this.onChanged,
   });
 
   final String hintText;
   final int maxLines;
   final void Function(String?)? onSaved;
+  final void Function(String)? onChanged;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      onChanged: onChanged,
       // هنستخدم onSaved عشان اخزن البيانات اللي المستخدم بيدخلها في المتغيرات اللي انا معرفها في الفورم
       onSaved: onSaved,
       validator: (value) {

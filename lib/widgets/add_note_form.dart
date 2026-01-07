@@ -51,6 +51,8 @@ class _AddNoteFormState extends State<AddNoteForm> {
               content = value;
             },
           ),
+          const SizedBox(height: 8),
+          // const ColorsListView(),
           const SizedBox(height: 55),
           BlocBuilder<AddNoteCubit, AddNoteState>(
             // بنستخدم BlocBuilder عشان ن rebuild ال ui فقط
@@ -65,7 +67,9 @@ class _AddNoteFormState extends State<AddNoteForm> {
                     _formKey.currentState?.save();
                     // الحصول على التاريخ الحالي بصيغة معينة عشان نحطه في نموذج النوت
                     DateTime currentDate = DateTime.now();
-                    String formattedCurrentDate = DateFormat('dd-MM-yyyy').format(currentDate);
+                    String formattedCurrentDate = DateFormat(
+                      'dd-MM-yyyy',
+                    ).format(currentDate);
                     // انشاء نموذج نوت جديد بالبيانات اللي المستخدم دخلها
                     var noteModel = NoteModel(
                       title: title!,

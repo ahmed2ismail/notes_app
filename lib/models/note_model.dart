@@ -9,17 +9,17 @@ part 'note_model.g.dart'; // .g => generated / .dart => Dart file
 @HiveType(typeId: 0) // كل موديل لازم ياخد ID فريد
 class NoteModel extends HiveObject {
   @HiveField(0) // كل متغير بياخد رقم (Index) وبيكون تابع للكلاس
-  final String title;
+  String title;
 
   @HiveField(1)
-  final String content;
+  String content;
 
   @HiveField(2)
   // احنا خلينا ال date String عشان hive ما بيدعمش DateTime بشكل مباشر لانه Object و hive بيدعم بس الانواع البسيطة زي int, double, String, bool, List, Map اما لو احنا عايزين نخزن Object زي DateTime فلازم نعمل Adapter خاص بيه
   final String date;
 
   @HiveField(3)
-  final int color;
+  int color;
 
   NoteModel({
     required this.title,
