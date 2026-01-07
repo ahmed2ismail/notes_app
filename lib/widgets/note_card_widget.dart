@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:notes_app/cubits/notes_cubit/notes_cubit.dart';
 import 'package:notes_app/models/note_model.dart';
 import 'package:notes_app/views/edit_note_view.dart';
 
@@ -49,6 +51,9 @@ class NoteCardWidget extends StatelessWidget {
                 padding: EdgeInsets.zero,
                 onPressed: () {
                   note.delete();
+                  // بعد ما نحذف النوت من ال Hive لازم نحدث الواجهة عشان نشيل النوت المحذوف من الليست ونعرض الليست المحدث
+                  // بنادي على ال fetchAllNotes عشان يجيبلي النوتس المحدثة من ال Hive ويحدث الواجهة ودا بيحصل بسبب وجود حالة ال success في ال emit في Notescubit
+                  BlocProvider.of<NotesCubit>(context).fetchAllNotes();
                 },
                 icon: const Icon(
                   FontAwesomeIcons.trash,

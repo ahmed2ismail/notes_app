@@ -17,5 +17,6 @@ class NotesCubit extends Cubit<NotesState> {
     final notesBox = Hive.box<NoteModel>(kNotesBoxName);
     // .values => Iterable<NoteModel> get values => بيجيب كل القيم اللي جوه ال box على شكل Iterable بمعني collection يعني مجموعة من العناصر
     notes = notesBox.values.toList();
+    emit(NotesSuccess());
   }
 }

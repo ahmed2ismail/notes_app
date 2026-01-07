@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:notes_app/cubits/add_note_cubit/add_note_cubit.dart';
 import 'package:notes_app/cubits/add_note_cubit/add_note_state.dart';
+import 'package:notes_app/cubits/notes_cubit/notes_cubit.dart';
 import 'package:notes_app/widgets/add_note_form.dart';
 
 class AddNoteBottomSheet extends StatelessWidget {
@@ -18,7 +19,8 @@ class AddNoteBottomSheet extends StatelessWidget {
         // بس انا هنا استخدمت BlocConsumer عشان هستخدم ويدجت AbsorbPointer عشان امنع المستخدم من التفاعل مع الفورم لما الحالة تكون Loading
         listener: (context, state) {
           if (state is AddNoteSuccess) {
-            // لو النوت اتضافت بنجاح هنقفل ال Bottom Sheet
+            // لو النوت اتضافت بنجاح هنحدث الواجهة بجلب البيانات المتحدثة وبعد كدا هنقفل ال Bottom Sheet
+            BlocProvider.of<NotesCubit>(context).fetchAllNotes();
             Navigator.pop(context);
           } else if (state is AddNoteFailure) {
             // لو في خطأ حصل هنظهر رسالة خطأ للمستخدم
