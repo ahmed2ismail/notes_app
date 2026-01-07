@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:notes_app/cubits/add_note_cubit/add_note_cubit.dart';
 import 'package:notes_app/cubits/add_note_cubit/add_note_state.dart';
 import 'package:notes_app/models/note_model.dart';
+import 'package:notes_app/widgets/colors_list_view.dart';
 import 'package:notes_app/widgets/custom_button.dart';
 import 'package:notes_app/widgets/custom_text_form_field.dart';
 
@@ -52,7 +53,7 @@ class _AddNoteFormState extends State<AddNoteForm> {
             },
           ),
           const SizedBox(height: 8),
-          // const ColorsListView(),
+          const ColorsListView(),
           const SizedBox(height: 55),
           BlocBuilder<AddNoteCubit, AddNoteState>(
             // بنستخدم BlocBuilder عشان ن rebuild ال ui فقط
