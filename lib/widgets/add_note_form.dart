@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:notes_app/cubits/add_note_cubit/add_note_cubit.dart';
 import 'package:notes_app/cubits/add_note_cubit/add_note_state.dart';
 import 'package:notes_app/models/note_model.dart';
@@ -62,14 +63,17 @@ class _AddNoteFormState extends State<AddNoteForm> {
                     // بمعني لو البيانات كلها صح
                     // حفظ البيانات اللي المستخدم دخلها في الفورم والبيانات دي بتتحفظ في المتغيرات اللي انا معرفها فوق
                     _formKey.currentState?.save();
-                    // بعد ما بحفظ البيانات بنعمل ايه؟
-                    // هنا بنستخدم ال Cubit اللي انا عملته عشان اضيف النوت الجديدة
+                    DateTime currentDate = DateTime.now();
+                    String formattedCurrentDate = DateFormat('dd-MM-yyyy').format(currentDate);
+                    // انشاء نموذج نوت جديد بالبيانات اللي المستخدم دخلها
                     var noteModel = NoteModel(
                       title: title!,
                       content: content!,
-                      date: DateTime.now().toString(),
+                      date: formattedCurrentDate,
                       color: Colors.blue.toARGB32(),
                     );
+                    // بعد ما بحفظ البيانات بنعمل ايه؟
+                    // هنا بنستخدم ال Cubit اللي انا عملته عشان اضيف النوت الجديدة
                     BlocProvider.of<AddNoteCubit>(context).addNote(noteModel);
                   } else {
                     // لو في بيانات غلط فهنفعل التحقق من صحة البيانات عشان يبان للمستخدم ايه الغلط
