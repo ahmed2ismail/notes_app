@@ -4,9 +4,9 @@ import 'package:notes_app/models/note_model.dart';
 import 'package:notes_app/views/edit_note_view.dart';
 
 class NoteCardWidget extends StatelessWidget {
-  const NoteCardWidget({super.key, required this.notes});
+  const NoteCardWidget({super.key, required this.note});
 
-  final NoteModel notes;
+  final NoteModel note;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -20,7 +20,7 @@ class NoteCardWidget extends StatelessWidget {
         padding: EdgeInsets.only(top: 24, bottom: 24, left: 16, right: 16),
         decoration: BoxDecoration(
           // color: Color(0xffFFCC80),
-          color: Color(notes.color),
+          color: Color(note.color),
           borderRadius: BorderRadius.circular(16),
         ),
         child: Column(
@@ -33,13 +33,13 @@ class NoteCardWidget extends StatelessWidget {
                 padding: const EdgeInsets.only(bottom: 16.0),
                 child: Text(
                   // 'Flutter Tips',
-                  notes.title,
+                  note.title,
                   style: const TextStyle(fontSize: 30, color: Colors.black),
                 ),
               ),
               subtitle: Text(
                 // 'Build Your Career With Tharwat Samy',
-                notes.content,
+                note.content,
                 style: TextStyle(
                   fontSize: 18,
                   color: Colors.black.withValues(alpha: 0.5),
@@ -47,7 +47,9 @@ class NoteCardWidget extends StatelessWidget {
               ),
               trailing: IconButton(
                 padding: EdgeInsets.zero,
-                onPressed: () {},
+                onPressed: () {
+                  note.delete();
+                },
                 icon: const Icon(
                   FontAwesomeIcons.trash,
                   size: 25,
@@ -59,7 +61,7 @@ class NoteCardWidget extends StatelessWidget {
               padding: const EdgeInsets.only(top: 16.0),
               child: Text(
                 // 'May21, 2022',
-                notes.date,
+                note.date,
                 style: TextStyle(
                   fontSize: 16,
                   color: Colors.black.withValues(alpha: 0.4),
