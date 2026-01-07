@@ -11,7 +11,7 @@ class NotesView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => NotesCubit(),
+      create: (context) => NotesCubit()..fetchAllNotes(),
       child: Scaffold(
         // resizeToAvoidBottomInset: false, // عشان لما يطلع الكيبورد مايحصلش overflow لل height يعني الشاشة متغيرش نفسها
         appBar: AppBar(
@@ -38,7 +38,11 @@ class NotesView extends StatelessWidget {
           },
           child: const Icon(Icons.add),
         ),
-        body: Expanded(child: NotesListView()),
+        body: BlocBuilder<NotesCubit, NotesState>(
+          builder: (context, state) {
+            return NotesListView();
+          },
+        ),
       ),
     );
   }
