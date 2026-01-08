@@ -4,6 +4,7 @@ import 'package:notes_app/cubits/notes_cubit/notes_cubit.dart';
 import 'package:notes_app/models/note_model.dart';
 import 'package:notes_app/widgets/custom_icon.dart';
 import 'package:notes_app/widgets/custom_text_form_field.dart';
+import 'package:notes_app/widgets/edit_note_colors_list.dart';
 
 class EditNoteView extends StatefulWidget {
   const EditNoteView({super.key, required this.note});
@@ -37,6 +38,15 @@ class _EditNoteViewState extends State<EditNoteView> {
               // بعد ما نحفظ التعديلات على النوت في ال Hive لازم نحدث الواجهة عشان نعرض النوتس المحدثة
               // بنادي على ال fetchAllNotes عشان يجيبلي النوتس المحدثة من ال Hive ويحدث الواجهة ودا بيحصل بسبب وجود حالة ال success في ال emit في Notescubit
               BlocProvider.of<NotesCubit>(context).fetchAllNotes();
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(
+                    'Edit Note Success.',
+                    style: TextStyle(color: Colors.white, fontSize: 16),
+                  ),
+                  backgroundColor: Colors.black,
+                ),
+              );
               Navigator.pop(context);
             },
           ),
@@ -63,6 +73,8 @@ class _EditNoteViewState extends State<EditNoteView> {
                 content = value;
               },
             ),
+            const SizedBox(height: 16),
+            EditNoteColorsList(note: widget.note),
           ],
         ),
       ),

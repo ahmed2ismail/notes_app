@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:notes_app/constansts.dart';
 import 'package:notes_app/cubits/add_note_cubit/add_note_cubit.dart';
 
 class ColorItem extends StatelessWidget {
@@ -28,22 +29,6 @@ class ColorsListView extends StatefulWidget {
 
 class _ColorsListViewState extends State<ColorsListView> {
   int currentSelectedIndex = 0;
-  List<Color> colors = const [
-    Color(0xffDD6E42),
-    Color(0xffE8DAB2),
-    Color(0xff4F6D7A),
-    Color(0xffC0D6DF),
-    Color(0xffEAEAEA),
-    Color(0xffFFA5A5),
-    Color(0xffFFCE56),
-    Color(0xff6BCB77),
-    Color(0xff4D96FF),
-    Color(0xff843b62),
-    Color(0xff2a9d8f),
-    Color(0xff264653),
-    Color(0xfff4a261),
-    Color(0xffe76f51),
-  ];
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -52,7 +37,7 @@ class _ColorsListViewState extends State<ColorsListView> {
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         physics: const BouncingScrollPhysics(),
-        itemCount: colors.length,
+        itemCount: kColors.length,
         itemBuilder: (context, index) {
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 6.0),
@@ -61,12 +46,12 @@ class _ColorsListViewState extends State<ColorsListView> {
                 setState(() {
                   currentSelectedIndex = index;
                   // هنا بنغير لون ال Cubit بتاع اضافة النوت عشان يبقي هو اللون اللي المستخدم اختاره
-                  BlocProvider.of<AddNoteCubit>(context).color = colors[index];
+                  BlocProvider.of<AddNoteCubit>(context).color = kColors[index];
                 });
               },
               child: ColorItem(
                 isSelected: currentSelectedIndex == index,
-                color: colors[index],
+                color: kColors[index],
               ),
             ),
           );

@@ -21,6 +21,15 @@ class AddNoteBottomSheet extends StatelessWidget {
           if (state is AddNoteSuccess) {
             // لو النوت اتضافت بنجاح هنحدث الواجهة بجلب البيانات المتحدثة وبعد كدا هنقفل ال Bottom Sheet
             BlocProvider.of<NotesCubit>(context).fetchAllNotes();
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  'Note Added Successful.',
+                  style: TextStyle(color: Colors.white, fontSize: 16),
+                ),
+                backgroundColor: Colors.black,
+              ),
+            );
             Navigator.pop(context);
           } else if (state is AddNoteFailure) {
             // لو في خطأ حصل هنظهر رسالة خطأ للمستخدم
