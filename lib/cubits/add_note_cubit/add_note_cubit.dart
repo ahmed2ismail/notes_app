@@ -18,6 +18,8 @@
 
 // ## كود انشاء الـ Cubit:
 
+import 'dart:ui';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
 import 'package:notes_app/constansts.dart';
@@ -26,6 +28,8 @@ import 'package:notes_app/models/note_model.dart';
 
 class AddNoteCubit extends Cubit<AddNoteState> {
   AddNoteCubit() : super(AddNoteInitial());
+  // هنا بنعرف متغير للون النوت الجديدة
+  Color? color = const Color(0xffDD6E42);
 
   Future<void> addNote(NoteModel note) async {
     // هنا هنضيف الكود الخاص باضافة النوت الجديدة
@@ -35,6 +39,7 @@ class AddNoteCubit extends Cubit<AddNoteState> {
     // ولو فشلت بنغير الحالة لـ AddNoteFailure مع رسالة الخطأ
     // emit => وظيفتها انها تبعت الحالة الجديدة للـ Cubit عشان الواجهة تعرف تتغير بناءً على الحالة الجديدة
     // emit => وأبسط مثال على استخدامها هو لما نبدأ عملية اضافة النوت بنبعت حالة التحميل
+    note.color = color!.toARGB32();
     emit(AddNoteLoading());
     try {
       final notesBox = Hive.box<NoteModel>(kNotesBoxName);
