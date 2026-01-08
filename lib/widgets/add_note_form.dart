@@ -52,9 +52,9 @@ class _AddNoteFormState extends State<AddNoteForm> {
               content = value;
             },
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 16),
           const ColorsListView(),
-          const SizedBox(height: 55),
+          const SizedBox(height: 60),
           BlocBuilder<AddNoteCubit, AddNoteState>(
             // بنستخدم BlocBuilder عشان ن rebuild ال ui فقط
             // بنستخدم BlocBuilder عشان نقدر نغير شكل الزرار بناءا علي حالة ال Cubit يعني لما الحالة تكون Loading بنعرض مؤشر تحميل في الزرار ولما تكون مش Loading بنعرض النص العادي
