@@ -18,7 +18,7 @@ class NotesView extends StatelessWidget {
           style: TextStyle(color: Colors.white, fontSize: 30),
         ),
         actionsPadding: const EdgeInsets.only(right: 16, top: 10),
-        actions: [CustomIcon(icon: const Icon(Icons.search))],
+        actions: const [CustomIcon(icon: Icon(Icons.search))],
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.blue,
@@ -38,7 +38,7 @@ class NotesView extends StatelessWidget {
       ),
       body: BlocBuilder<NotesCubit, NotesState>(
         builder: (context, state) {
-          return NotesListView();
+          return const NotesListView();
         },
       ),
     );

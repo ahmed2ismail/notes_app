@@ -9,7 +9,7 @@ class CustomIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      padding: EdgeInsets.all(10),
+      padding: const EdgeInsets.all(10),
       iconSize: 28,
       style: ButtonStyle(
         backgroundColor: WidgetStateProperty.all<Color>(

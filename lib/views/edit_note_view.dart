@@ -39,7 +39,7 @@ class _EditNoteViewState extends State<EditNoteView> {
               // بنادي على ال fetchAllNotes عشان يجيبلي النوتس المحدثة من ال Hive ويحدث الواجهة ودا بيحصل بسبب وجود حالة ال success في ال emit في Notescubit
               BlocProvider.of<NotesCubit>(context).fetchAllNotes();
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
+                const SnackBar(
                   content: Text(
                     'Edit Note Success.',
                     style: TextStyle(color: Colors.white, fontSize: 16),

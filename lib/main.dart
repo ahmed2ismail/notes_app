@@ -29,19 +29,6 @@ class NotesApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    /*
-    // الخطوة اللي عليها الدور بعد انشاء ال cubit هي استخدامه عن طريق MultiBlocProvider فوق ال MaterialApp عشان نوفر ال Cubit لكل الابلكيشن
-    // بنستخدم MultiBlocProvider لما يكون عندنا اكتر من Cubit او Bloc عشان نوفرهم في نفس الوقت في الابلكيشن
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (context) => AddNoteCubit(),
-          // وكده ال AddNoteCubit عمره مهيتقفل طول م الابلكيشن شغال عشان احنا موفرينه فوق ال MaterialApp ودا بيستهلك ال resources بتاعت الجهاز بشكل اكبر شوية
-          // لو حبينا نقفل ال Cubit لما نخرج من الابلكيشن ممكن نستخدم BlocProvider بدل MultiBlocProvider ونوفره بس في الصفحة اللي هنستخدمه فيها ودا اللي هنعمله
-        ),
-      ],
-      child: MaterialApp(
-      */
     return BlocProvider(
       create: (context) => NotesCubit()..fetchAllNotes(),
       child: MaterialApp(
@@ -57,7 +44,7 @@ class NotesApp extends StatelessWidget {
           useMaterial3: true,
           fontFamily: 'Poppins',
         ),
-        home: NotesView(),
+        home: const NotesView(),
       ),
     );
   }
